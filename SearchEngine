@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bug Bounty Search Engine</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000000;
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .futuristic-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .futuristic-button:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #000000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <script>
+        function googleSearch(type) {
+            var targetDomain = document.getElementById('target').value;
+
+            if (!targetDomain) {
+                alert('Please enter a target domain.');
+                return;
+            }
+
+            var searchQuery = 'site:' + targetDomain;
+
+            switch (type) {
+                case 1: searchQuery += ' intitle:index.of'; break;
+                case 2: searchQuery += ' ext:xml | ext:conf | ext:cnf | ext:reg | ext:inf | ext:rdp | ext:cfg | ext:txt | ext:ora | ext:ini'; break;
+                case 3: searchQuery += ' ext:sql | ext:dbf | ext:mdb'; break;
+                case 4: searchQuery += ' ext:log'; break;
+                case 5: searchQuery += ' ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup'; break;
+                case 6: searchQuery += ' inurl:login'; break;
+                case 7: searchQuery += ' intext:"sql syntax near" | intext:"syntax error has occurred" | intext:"incorrect syntax near" | intext:"unexpected end of SQL command"'; break;
+                case 8: searchQuery += ' ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv'; break;
+                case 9: searchQuery += ' ext:php intitle:phpinfo "published by the PHP Group"'; break;
+                case 10: searchQuery += ' inurl:wp- | inurl:wp-content | inurl:plugins | inurl:uploads | inurl:themes | inurl:download'; break;
+                case 11: searchQuery += ' inurl:shell | inurl:backdoor | inurl:wso | inurl:cmd | shadow | passwd | boot.ini | inurl:backdoor'; break;
+                case 12: searchQuery += ' inurl:readme | inurl:license | inurl:install | inurl:setup | inurl:config'; break;
+                case 13: searchQuery += ' inurl:redir | inurl:url | inurl:redirect | inurl:return | inurl:src=http | inurl:r=http'; break;
+                case 14: searchQuery += ' ext:action | ext:struts | ext:do'; break;
+                case 15: searchQuery += ' site:pastebin.com ' + targetDomain; break;
+                case 16: searchQuery += ' site:linkedin.com employees ' + targetDomain; break;
+                case 17: searchQuery += ' inurl:"/phpinfo.php" | inurl:".htaccess" | inurl:"/.git" ' + targetDomain + ' -github'; break;
+                case 18: searchQuery += ' site:*.' + targetDomain; break;
+                case 19: searchQuery += ' site:*.*.' + targetDomain; break;
+                case 20: searchQuery += ' inurl:wp-content | inurl:wp-includes ' + targetDomain; break;
+                case 21: searchQuery += ' site:' + targetDomain + ' mime:swf'; break;
+                case 22: searchQuery += ' inurl:/admin.aspx'; break;
+                case 23: searchQuery += ' intitle:"index of "main.yml"'; break;
+                case 24: searchQuery += ' intitle:"index of /backup/ "admin.zip"'; break;
+                case 25: searchQuery += ' intitle:"index of" github-api'; break;
+                case 26: searchQuery += ' inurl:uploadimage.php'; break;
+                case 27: searchQuery += ' inurl:*/wp-content/plugins/contact-form-7/'; break;
+                case 28: searchQuery += ' intitle:index.of conf.php'; break;
+                case 29: searchQuery += ' intitle:"Sharing API Info"'; break;
+                case 30: searchQuery += ' inurl:user intitle:"Drupal" intext:"Log in" -"powered by"'; break;
+                case 31: searchQuery += ' inurl: /libraries/joomla/database/'; break;
+                case 32: searchQuery += ' inurl:"php?sql=select" ext:php'; break;
+                case 33: searchQuery += ' inurl:"wp-content" intitle:"index.of" intext:wp-config.php'; break;
+                case 34: searchQuery += ' intitle:index.of conf.mysql'; break;
+                case 35: searchQuery += ' intitle:"index of" "users.yml" | "admin.yml" | "config.yml"'; break;
+                case 36: searchQuery += ' intitle:"index of" "docker-compose.yml"'; break;
+                case 37: searchQuery += ' intext:"index of" inurl:json-rpc'; break;
+                case 38: searchQuery += ' intext:pom.xml intitle:"index of /"'; break;
+                case 39: searchQuery += ' "sql" "parent" intitle:index.of -injection'; break;
+                case 40: searchQuery += ' inurl:"/wp-content/uploads/wpo_wcpdf"'; break;
+                case 41: searchQuery += ' intext:"index of" inurl:jwks-rsa'; break;
+                case 42: searchQuery += ' "docker-compose.yml"'; break;
+                default:
+                    alert('Invalid option.');
+                    return;
+            }
+
+            var url = 'https://www.google.com/search?q=' + encodeURIComponent(searchQuery);
+            window.open(url, '_blank');
+        }
+
+        function googleOSINTSearch(type) {
+            var targetDomain = document.getElementById('target').value;
+
+            if (!targetDomain) {
+                alert('Please enter a target domain.');
+                return;
+            }
+
+            var searchQuery = '';
+            switch (type) {
+                case 1:
+                    searchQuery = 'site:' + targetDomain + ' intext:@' + targetDomain;
+                    break;
+                case 2:
+                    searchQuery = 'site:github.com "' + targetDomain + '"';
+                    break;
+                case 3:
+                    searchQuery = 'site:*.pdf OR site:*.docx OR site:*.xlsx "' + targetDomain + '"';
+                    break;
+                default:
+                    alert('Invalid OSINT');
+                    return;
+            }
+        }
+```
+
